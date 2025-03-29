@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upload Successful</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Upload Successful</h1>
+        
+        <div class="nav-links">
+            <a href="{{ url_for('index') }}">Home</a> |
+            <a href="{{ url_for('list_documents') }}">My Documents</a> |
+            <a href="{{ url_for('upload_file') }}">Upload More</a>
+        </div>
+        
+        <div class="success-container">
+            <h3>Files successfully uploaded to Google Drive:</h3>
+            <ul class="file-list">
+                {% for file in files %}
+                <li>
+                    <strong>{{ file.get('name') }}</strong> 
+                    {% if file.get('webViewLink') %}
+                    <a href="{{ file.get('webViewLink') }}" target="_blank" class="view-link">View</a>
+                    {% endif %}
+                    
+                    {% if file.get('summary') %}
+                    <div class="summary-toggle">
+                        <button onclick="toggleSummary('summary-{{ loop.index }}')" class="toggle-button">
+                            Show/Hide Summary
+                        </button>
+                    </div>
+                    <div id="summary-{{ loop.index }}" class="summary-content" style="display: none;">
+                        <div class="summary-box">
+                            <h4>Document Summary</h4>
+                            <div class="summary-text">
+                                {{ file.get('summary')|safe }}
+                            </div>
+                        </div>
+                    </div>
+                    {% endif %}
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+    
+    <script>
+        function toggleSummary(id) {
+            const summaryElement = document.getElementById(id);
+            if (summaryElement.style.display === "none") {
+                summaryElement.style.display = "block";
+            } else {
+                summaryElement.style.display = "none";
+            }
+        }
+    </script>
+</body>
+</html>
