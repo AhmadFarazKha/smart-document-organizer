@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Summary Results</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>PDF Summary</h1>
+            <p>Document: {{ filename }}</p>
+        </header>
+
+        <main>
+            <div class="results-container">
+                <section class="summary-section">
+                    <h2>Summary</h2>
+                    <div class="summary-content">
+                        {{ summary }}
+                    </div>
+                </section>
+
+                <section class="key-points-section">
+                    <h2>Key Points</h2>
+                    <ul class="key-points-list">
+                        {% for point in key_points %}
+                            <li>{{ point }}</li>
+                        {% endfor %}
+                    </ul>
+                </section>
+
+                <div class="actions">
+                    <a href="{{ url_for('index') }}" class="back-btn">Process Another Document</a>
+                </div>
+            </div>
+        </main>
+
+        <footer>
+            <p>PDF Summarizer using Google Cloud AI</p>
+        </footer>
+    </div>
+</body>
+</html>
